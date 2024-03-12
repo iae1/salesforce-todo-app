@@ -1,0 +1,45 @@
+<template>
+    <lightning-card title="Todo App" icon-name="custom:custom14">
+        <div class="slds-m-around_medium">
+            <lightning-input label="What needs to be done?" value={newTodo} onchange={handleInputChange}></lightning-input>
+            <lightning-button label="Add Todo" variant="brand" onclick={addTodo} class="slds-m-top_small"></lightning-button>
+        </div>
+        <template if:true={todos}>
+            <ul class="slds-m-around_medium">
+                <template for:each={todos} for:item="todo">
+                    <li key={todo.id} class="slds-item slds-box slds-box_x-small slds-text-align_left slds-m-bottom_small slds-grid">
+                        <div class="slds-col slds-size_5-of-6">
+                            <span class="slds-m-right_small">{todo.title}</span>
+                    
+                            <lightning-input type="toggle" 
+                                            label="Completed" 
+                                            checked={todo.completed} 
+                                            onchange={updateTodoStatus}
+                                            message-toggle-active=""
+                                            message-toggle-inactive=""
+                                            data-id={todo.id} 
+                                            data-title={todo.title}
+                                            class="slds-m-right_small">
+                            </lightning-input>
+                        </div>
+                        
+                        <div class="slds-col slds-size_1-of-6">
+                            <lightning-button-icon icon-name="utility:delete" 
+                                                variant="bare" 
+                                                alternative-text="Delete" 
+                                                size="large" 
+                                                title="Delete" 
+                                                onclick={deleteTodo} 
+                                                data-id={todo.id} 
+                                                class="slds-float_right">
+                            </lightning-button-icon>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+        </template>
+        <template if:false={todos}>
+            <p>No todos found. Add some!</p>
+        </template>
+    </lightning-card>
+</template>
